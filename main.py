@@ -1,14 +1,6 @@
 def main():
     book_path = "books/frankenstein.txt"
-    text = get_book_text(book_path)
-    text_word_count = count_number_of_words(text)
-    unique_character_counts = get_unique_character_counts(text)
-    
-    print(text)
-    print("")
-    print(f"This text contains {text_word_count} words!")
-    print("")
-    print(f"The unique character counts of this text are:\n{unique_character_counts}")
+    print_book_report(book_path)
 
 
 def get_book_text(path_to_file):
@@ -33,6 +25,25 @@ def get_unique_character_counts(string):
             character_count_dictionary[character] += 1
             
     return character_count_dictionary
+
+
+def print_book_report(path_to_book):
+    book_text = get_book_text(path_to_book)
+    book_word_count = count_number_of_words(book_text)
+    unique_character_counts = get_unique_character_counts(book_text)
+    sorted_unique_character_counts = dict(sorted(unique_character_counts.items(), key=lambda item: item[1], reverse=True))
+    
+    print(f"--- Begin report of {path_to_book} ---")
+    print(f"The book contains {book_word_count} words.")
+    print()
+    print(f"Unique alpha-character counts of book's text (in descending order):")
+
+    for character in sorted_unique_character_counts:
+        if character.isalpha():
+            count = sorted_unique_character_counts[character]
+            print(f"The '{character}' character was found {count} times.")
+
+    print("--- End report ---")
 
 
 main()
